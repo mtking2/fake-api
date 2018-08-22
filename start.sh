@@ -1,18 +1,52 @@
-pkill -f ngrok "puma.*fake_api"
+colors() {
+  green="\033[0;32m"
+  red="\033[0;31m"
+  yellow='\033[0;33m'
+  blue='\033[0;34m'
+  no_color="\033[0m"
+}
 
-[ -f api.log ] || touch api.log
+init() {
+  colors
+  pkill -9 -f ngrok "puma.*fake_api"
 
-ruby api.rb >> api.log 2>&1 &
-ngrok http 4567 > /dev/null &
-disown
+  ruby api.rb >> api.log 2>&1 &
+  ngrok http 4567 > /dev/null &
+  disown
 
-# sleep 1.5
-# var_location="$HOME/.bash_profile"
-#
-# old_url="$(grep -oE "(https:\/\/\w+\.ngrok\.io)" $var_location)"
-# new_url="$(curl -s localhost:4040/api/tunnels | grep -oE "(https:\/\/\w+\.ngrok\.io)")"
-# echo "$new_url --> $(ps -a | grep puma | grep fake_api | grep -oE "localhost:\d+")"
-#
-# old_url="$(echo $old_url | sed 's/\//\\\//g')"
-# new_url="$(echo $new_url | sed 's/\//\\\//g')"
-# sed -i '' 's/'"$old_url"'/'"$new_url"'/g' $var_location
+  sleep 1.5 # give sinatra & ngrok some time to start
+  new_url="$(curl -s localhost:4040/api/tunnels | grep -oE "(https:\/\/\w+\.ngrok\.io)")"
+  echo "Fake API started and tunneled through ngrok."
+  echo " ↳ ${yellow}$new_url${no_color} --> ${yellow}$(ps -a | grep puma | grep fake_api | grep -oE "localhost:\d+")${no_color}"
+}
+init
+
+touch_env_var() {
+  echo
+  if [[ -n $NGROK_URL ]]; then
+    echo "already has ${red}\$NGROK_URL${no_color} environment variable"
+
+    if [[ -n "$(grep "NGROK_URL" $HOME/.bashrc)" ]]; then
+      var_location="$HOME/.bashrc"
+    elif [[ -n "$(grep "NGROK_URL" $HOME/.zshrc)" ]]; then
+      var_location="$HOME/.zshrc"
+    elif [[ -n "$(grep "NGROK_URL" $HOME/.bash_profile)" ]]; then
+      var_location="$HOME/.bash_profile"
+    fi
+
+    echo " ↳ located at $var_location → modifying..."
+    old_url="$(grep -oE "(https:\/\/\w+\.ngrok\.io)" $var_location | sed 's/\//\\\//g')"
+    sub_url="$(echo $1 | sed 's/\//\\\//g')"
+    sed -i '' 's/'"$old_url"'/'"$sub_url"'/g' $var_location
+  else
+    echo 'DOES NOT have NGROK_URL environment variable.'
+    echo " ↳ adding to $HOME/.bash_profile"
+    echo "export NGROK_URL=\"$1\"" >> "$HOME/.bash_profile"
+  fi
+}
+
+# comment this line out if you don't want to have the script automatically
+# create & modify the $NGROK_URL environment variable
+touch_env_var $new_url
+
+echo "\ndone ${green}✔${no_color}  access ngrok interface via ${blue}http://localhost:4040${no_color}\n"
