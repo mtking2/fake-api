@@ -23,5 +23,5 @@ Now you're ready to pop open ngrok (http://localhost:4040) and start montitoring
 2. starts Sinatra server in background
 3. starts ngrok tunnel in background
 4. automatically creates and/or updates an `$NGROK_URL` environment variable for your leisure.
-  - **note**: the script attempts to modify your `.bashrc`, `.zshrc`, or `.bash_profile` (whichever it may find it) in place to keep the environment variable up-to-date with the current ngrok url.
+    - **note**: the script attempts to modify your `.bashrc`, `.zshrc`, or `.bash_profile` (whichever it may find it) in place to keep the environment variable up-to-date with the current ngrok url.
 5. 💵💵💵
