@@ -1,5 +1,7 @@
 pkill -f ngrok fake_api
 
+[ -f api.log ] || touch api.log
+
 ruby api.rb >> api.log 2>&1 &
 ngrok http 4567 > /dev/null &
 
