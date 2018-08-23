@@ -18,6 +18,39 @@ After that feel free to run the included script with `./start.sh`.
 
 Now you're ready to pop open ngrok (http://localhost:4040) and start montitoring some requests.
 
+### Example requests
+
+**JSON**
+```shell
+curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' \
+  -d $'{
+    "data": {
+      "some-attribute": "some data"
+    }
+  }'
+
+# from file
+curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' -d @foo.json
+```
+<p align="center">![JSON ngrok example](https://i.imgur.com/aLP1SPB.png)</p>
+
+**XML**
+```shell
+curl $NGROK_URL/xml/some-endpoint -H 'Content-Type: text/xml' \
+  -d $'
+  <Parent attribute="some-attribute">
+    <Child attribute="another-attribute">
+      Hello, world!
+    </Child>
+  </Parent>'
+
+# from file
+curl $NGROK_URL/json/some-endpoint -H 'Content-Type: text/xml' -d @foo.xml
+```
+<p align="center">![XML ngrok example](https://i.imgur.com/IGqHqvV.png)</p>
+
+
+
 ### Breakdown of script
 1. kills any currently running instances of Sinatra and/or ngork
 2. starts Sinatra server in background
