@@ -11,7 +11,7 @@ This requires that you have installed [ngrok](https://ngrok.com) and added it to
 
 To do that visit https://ngrok.com/download to download ngrok. Then just add a line to your `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` like so:
 ```shell
-export PATH="$PATH:/path/to/ngrok"
+export PATH="$PATH:/path/to/ngrok/"
 ```
 
 After that feel free to run the included script with `./start.sh`.
@@ -22,7 +22,9 @@ Now you're ready to pop open ngrok (http://localhost:4040) and start montitoring
 
 **JSON**
 ```shell
-curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' \
+curl -X GET $NGROK_URL/json/some-endpoint
+
+curl -X POST $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' \
   -d $'{
     "data": {
       "some-attribute": "some data"
@@ -30,7 +32,7 @@ curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' \
   }'
 
 # from file
-curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' -d @foo.json
+curl -X POST $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' -d @foo.json
 ```
 <p align="center">
   <img src="https://i.imgur.com/aLP1SPB.png" alt="JSON ngrok example" />
@@ -38,7 +40,7 @@ curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' -d @foo.j
 
 **XML**
 ```shell
-curl $NGROK_URL/xml/some-endpoint -H 'Content-Type: text/xml' \
+curl -X POST $NGROK_URL/xml/some-endpoint -H 'Content-Type: text/xml' \
   -d $'
   <Parent attribute="some-attribute">
     <Child attribute="another-attribute">
@@ -47,7 +49,7 @@ curl $NGROK_URL/xml/some-endpoint -H 'Content-Type: text/xml' \
   </Parent>'
 
 # from file
-curl $NGROK_URL/json/some-endpoint -H 'Content-Type: text/xml' -d @foo.xml
+curl -X POST $NGROK_URL/json/some-endpoint -H 'Content-Type: text/xml' -d @foo.xml
 ```
 <p align="center">
   <img src="https://i.imgur.com/IGqHqvV.png" alt="XML ngrok example" />
