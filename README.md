@@ -32,7 +32,9 @@ curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' \
 # from file
 curl $NGROK_URL/json/some-endpoint -H 'Content-Type: application/json' -d @foo.json
 ```
-<p align="center">![JSON ngrok example](https://i.imgur.com/aLP1SPB.png)</p>
+<p align="center">
+  <img src="https://i.imgur.com/aLP1SPB.png" alt="JSON ngrok example" />
+</p>
 
 **XML**
 ```shell
@@ -47,7 +49,9 @@ curl $NGROK_URL/xml/some-endpoint -H 'Content-Type: text/xml' \
 # from file
 curl $NGROK_URL/json/some-endpoint -H 'Content-Type: text/xml' -d @foo.xml
 ```
-<p align="center">![XML ngrok example](https://i.imgur.com/IGqHqvV.png)</p>
+<p align="center">
+  <img src="https://i.imgur.com/IGqHqvV.png" alt="XML ngrok example" />
+</p>
 
 
 
