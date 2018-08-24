@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'nokogiri'
-require 'pry-rails'
 require 'json'
 
 # set this to true if you want to match any and all routes.
@@ -23,7 +22,7 @@ unless @match_all # use JSON and XML specific endpoints. Reject / and undefined
     ct = request.media_type
     path = request.path
     method = request.request_method
-    
+
     if ct != 'text/xml' && method == 'POST'
       halt 400, {'Content-Type' => 'text/plain'}, "Invalid Content Type #{ct} for endpoint #{path}"
     end
