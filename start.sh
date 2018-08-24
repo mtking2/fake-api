@@ -49,4 +49,4 @@ touch_env_var() {
 # create & modify the $NGROK_URL environment variable
 touch_env_var $new_url
 
-echo "\ndone ${green}✔${no_color}  access ngrok interface via ${blue}http://localhost:4040${no_color}\n"
+echo "\ndone ${green}✓${no_color}  access ngrok interface via ${blue}http://localhost:4040${no_color}\n"
