@@ -4,7 +4,7 @@ require 'json'
 
 # set this to true if you want to match any and all routes.
 # defaults to JSON and XML specific endpoints while rejecting root and undefined routes.
-@match_all = false
+@match_all = true
 
 unless @match_all # use JSON and XML specific endpoints. Reject / and undefined
 
@@ -86,6 +86,12 @@ else # match any and all routes for GET & POST and treat as JSON
   end
 
   post '/*' do
+    request.body.rewind
+    json = JSON.parse request.body.read
+    puts "I got some JSON: #{json.inspect}"
+  end
+
+  patch '/*' do
     request.body.rewind
     json = JSON.parse request.body.read
     puts "I got some JSON: #{json.inspect}"
