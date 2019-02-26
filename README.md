@@ -2,7 +2,7 @@
 
 ### Getting started
 
-Run `bundle install`  
+Run `bundle install`
 Then simply `ruby api.rb` to start the server. (defaults to http://localhost:4567)
 
 ### Advanced options
@@ -58,7 +58,7 @@ curl -X POST $NGROK_URL/json/some-endpoint -H 'Content-Type: text/xml' -d @foo.x
 
 
 ### Breakdown of script
-1. kills any currently running instances of Sinatra and/or ngork
+1. kills any currently running instances of Sinatra and/or ngrok
 2. starts Sinatra server in background
 3. starts ngrok tunnel in background
 4. automatically creates and/or updates an `$NGROK_URL` environment variable for your leisure.
