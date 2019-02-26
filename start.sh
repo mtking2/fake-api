@@ -35,9 +35,9 @@ touch_env_var() {
     fi
 
     echo " ↳ located at $var_location → modifying..."
-    old_url="$(grep -oE "(https:\/\/\w+\.ngrok\.io)" $var_location | sed 's/\//\\\//g')"
+    old_url="$(grep -oE "(https?:\/\/\w+\.ngrok\.io)" $var_location | sed 's/\//\\\//g')"
     sub_url="$(echo $1 | sed 's/\//\\\//g')"
-    sed -i '' 's/'"$old_url"'/'"$sub_url"'/g' $var_location
+    sed -i '' "s/$old_url/$sub_url/g" $var_location
   else
     echo 'DOES NOT have NGROK_URL environment variable.'
     echo " ↳ adding to $HOME/.bash_profile"
