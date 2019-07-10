@@ -2,6 +2,10 @@ require 'sinatra'
 require 'nokogiri'
 require 'json'
 
+configure {
+  set :server, :puma
+}
+
 # set this to true if you want to match any and all routes.
 # defaults to JSON and XML specific endpoints while rejecting root and undefined routes.
 @match_all = true
