@@ -8,13 +8,15 @@ colors() {
 
 init() {
   colors
-  pkill -9 -f ngrok "puma.*fake_api"
+  kill -9 $(cat pid/server.pid) $(cat pid/ngrok.pid)
 
   ruby api.rb >> api.log 2>&1 &
+  echo $! > pid/server.pid
   ngrok http 4567 > /dev/null &
+  echo $! > pid/ngrok.pid
   disown
 
-  sleep 1.5 # give sinatra & ngrok some time to start
+  sleep 2 # give sinatra & ngrok some time to start
   new_url="$(curl -s localhost:4040/api/tunnels | grep -oE "(https:\/\/\w+\.ngrok\.io)")"
   echo "Fake API started and tunneled through ngrok."
   echo " ↳ ${yellow}$new_url${no_color} --> ${yellow}$(ps -a | grep puma | grep fake_api | grep -oE "localhost:\d+")${no_color}"
@@ -23,6 +25,7 @@ init
 
 touch_env_var() {
   echo
+  source ~/.bash_profile
   if [[ -n $NGROK_URL ]]; then
     echo "already has ${red}\$NGROK_URL${no_color} environment variable"
 
@@ -35,8 +38,9 @@ touch_env_var() {
     fi
 
     echo " ↳ located at $var_location → modifying..."
-    old_url="$(grep -oE "(https?:\/\/\w+\.ngrok\.io)" $var_location | sed 's/\//\\\//g')"
-    sub_url="$(echo $1 | sed 's/\//\\\//g')"
+    old_url="$(grep -oE "export NGROK_URL=\"(https?:\/\/\w+\.ngrok\.io)?\"" $var_location | sed 's/\//\\\//g')"
+    sub_url="export NGROK_URL=\"$(echo $1 | sed 's/\//\\\//g')\""
+    # echo "$old_url --> $sub_url"
     sed -i '' "s/$old_url/$sub_url/g" $var_location
   else
     echo 'DOES NOT have NGROK_URL environment variable.'
