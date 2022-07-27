@@ -7,7 +7,7 @@ configure { set :server, :puma }
 
 # set this to true if you want to match any and all routes.
 # defaults to JSON and XML specific endpoints while rejecting root and undefined routes.
-@match_all = false
+@match_all = true
 
 if @match_all # match any and all routes for GET & POST and treat as JSON
 
