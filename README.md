@@ -3,7 +3,7 @@
 ### Getting started
 
 Run `bundle install`
-Then simply `ruby api.rb` to start the server. (defaults to http://localhost:4567)
+Then simply `ruby api/server.rb` to start the server. (defaults to http://localhost:4567)
 
 ### Advanced options
 
