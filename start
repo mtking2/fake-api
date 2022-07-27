@@ -24,7 +24,6 @@ init() {
 	# pkill -9 -f fake-api ngrok
 	./stop
 
-	echo "args: $1"
 	if [ -z "$1" ]; then
 		ruby api/server.rb >> api/server.log 2>&1 &
 	else
