@@ -14,7 +14,7 @@ To do that visit https://ngrok.com/download to download ngrok. Then just add a l
 export PATH="$PATH:/path/to/ngrok/"
 ```
 
-After that feel free to run the included script with `./start.sh`.
+After that feel free to run the included script with `./start`.
 
 Now you're ready to pop open ngrok (http://localhost:4040) and start montitoring some requests.
 

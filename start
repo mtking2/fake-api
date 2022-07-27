@@ -22,9 +22,15 @@ init() {
 	# kill -9 $(cat pid/server.pid) $(cat pid/ngrok.pid)
 
 	# pkill -9 -f fake-api ngrok
-	./stop.sh
+	./stop
 
-	ruby api/server.rb >> api/server.log 2>&1 &
+	echo "args: $1"
+	if [ -z "$1" ]; then
+		ruby api/server.rb >> api/server.log 2>&1 &
+	else
+		ruby $1/server.rb >> $1/server.log 2>&1 &
+	fi
+
 	echo "$(pgrep fake-api)" > pid/server.pid
 	ngrok http 4567 > /dev/null &
 	echo "$(pgrep ngrok)" > pid/ngrok.pid
@@ -35,7 +41,7 @@ init() {
 	echo "Fake API started and tunneled through ngrok."
 	echo " ↳ ${yellow}$new_url${no_color} --> ${yellow}$(ps -a | grep puma | grep fake-api | grep -oE "localhost:\d+")${no_color}"
 }
-init
+init $1
 
 touch_env_var() {
 	echo
