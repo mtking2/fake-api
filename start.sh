@@ -21,7 +21,8 @@ init() {
 	#
 	# kill -9 $(cat pid/server.pid) $(cat pid/ngrok.pid)
 
-	pkill -9 -f fake-api ngrok
+	# pkill -9 -f fake-api ngrok
+	./stop.sh
 
 	ruby api/server.rb >> api/server.log 2>&1 &
 	echo "$(pgrep fake-api)" > pid/server.pid
