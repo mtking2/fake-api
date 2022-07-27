@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'puma'
-gem 'nokogiri'
+gem 'httparty'
 gem 'json'
+gem 'nokogiri'
+gem 'pry'
+gem 'puma'
+gem 'sinatra'
