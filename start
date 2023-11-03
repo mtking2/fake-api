@@ -36,7 +36,7 @@ init() {
 	disown
 
 	sleep 2 # give sinatra & ngrok some time to start
-	new_url="$(curl -s localhost:4040/api/tunnels | grep -oE "(https:\/\/(\w+-?)+\.ngrok\.io)")"
+	new_url="$(curl -s localhost:4040/api/tunnels | grep -oE "(https:\/\/(\w+-?)+\.ngrok-free\.app)")"
 	echo "Fake API started and tunneled through ngrok."
 	echo " ↳ ${yellow}$new_url${no_color} --> ${yellow}$(ps -a | grep puma | grep fake-api | grep -oE "localhost:\d+")${no_color}"
 }
